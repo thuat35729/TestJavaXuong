@@ -29,6 +29,7 @@ public class ExcelSevice {
                 staff.setName(getCellValue(row.getCell(2)));
                 staff.setAccountFE(getCellValue(row.getCell(3)));
                 staff.setAccountFPT(getCellValue(row.getCell(4)));
+//                staff.setStatus(staff.isStatus(row.getCell(5)));
                 staffList.add(staff);
             }
         }

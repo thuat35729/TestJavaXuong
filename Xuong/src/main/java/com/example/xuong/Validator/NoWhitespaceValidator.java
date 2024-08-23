@@ -10,7 +10,10 @@ public class NoWhitespaceValidator implements ConstraintValidator<NoWhitespace, 
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return value != null && !value.contains(" ");
+        if (value == null) {
+            return false;
+        }
+        return value.endsWith("@fpt.edu.vn");
     }
 }
 

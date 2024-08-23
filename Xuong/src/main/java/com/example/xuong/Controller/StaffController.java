@@ -80,7 +80,7 @@ public class StaffController {
     public String changeStatus(@RequestParam("id") UUID id, Model model) {
         Staff staff = staffRepo.findById(id).orElse(null);
         if (staff != null) {
-            staff.setStatus(staff.getStatus() == 1 ? 0 : 1);
+            staff.setStatus(staff.isStatus() == true ? true : false);
             staffRepo.save(staff);
             model.addAttribute("message", "Đổi trạng thái thành công");
         } else {
@@ -119,6 +119,7 @@ public class StaffController {
         staffRepo.save(staff);
         return "redirect:/home";
     }
+
     @GetMapping("/export/excel")
     public ResponseEntity<byte[]> exportToExcel() throws IOException {
         List<Staff> staffList = staffRepo.findAll(); // Lấy toàn bộ dữ liệu từ database
@@ -126,7 +127,6 @@ public class StaffController {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Staff List");
 
-        // Tạo dòng tiêu đề
         Row headerRow = sheet.createRow(0);
         headerRow.createCell(0).setCellValue("ID");
         headerRow.createCell(1).setCellValue("Mã nhân viên");
@@ -135,7 +135,6 @@ public class StaffController {
         headerRow.createCell(4).setCellValue("Email FE");
         headerRow.createCell(5).setCellValue("Trạng thái");
 
-        // Tạo các dòng dữ liệu
         int rowIndex = 1;
         for (Staff staff : staffList) {
             Row row = sheet.createRow(rowIndex++);
@@ -144,15 +143,12 @@ public class StaffController {
             row.createCell(2).setCellValue(staff.getName());
             row.createCell(3).setCellValue(staff.getAccountFPT());
             row.createCell(4).setCellValue(staff.getAccountFE());
-            row.createCell(5).setCellValue(staff.getStatus() == 1 ? "Đang hoạt động" : "Ngưng hoạt động");
+            row.createCell(5).setCellValue(staff.isStatus() == true ? "Đang hoạt động" : "Ngưng hoạt động");
         }
-
-        // Ghi dữ liệu ra ByteArrayOutputStream
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         workbook.write(outputStream);
         workbook.close();
 
-        // Tạo header cho file download
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=staff_list.xlsx");
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -162,6 +158,12 @@ public class StaffController {
                 .headers(headers)
                 .body(outputStream.toByteArray());
     }
+    @GetMapping("/import")
+    public String importForm()
+    {
+        return "importForm";
+    }
+
     @PostMapping("/import/staff")
     public String importStaff(@RequestParam("file") MultipartFile file, Model model) {
         try {

@@ -56,5 +56,5 @@ public class Staff {
     private String staffCode;
 
     @Column(name = "status")
-    private int status;
+    private boolean status;
 }

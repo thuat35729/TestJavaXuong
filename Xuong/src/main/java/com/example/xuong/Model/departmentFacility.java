@@ -21,8 +21,8 @@ public class departmentFacility {
     @Id
     @GeneratedValue
     private UUID id;
-    private UUID idDepartMent;
-    private UUID idFacility;
-    private UUID staff;
+    private String idDepartMent;
+    private String idFacility;
+    private String staff;
 
 }

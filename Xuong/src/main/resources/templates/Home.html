@@ -33,11 +33,13 @@
     <div class="row">
         <p class="col-4">Trạng thái</p>
         <div class="form-check col-4">
-            <input class="form-check-input" type="radio" name="status" value="1" th:checked="${staffEr.status == 1}">
+            <input class="form-check-input" type="radio" name="status" value="true"
+                   th:checked="${staffEr.status == true}">
             <label class="form-check-label">Đang hoạt động</label>
         </div>
         <div class="form-check col-4">
-            <input class="form-check-input" type="radio" name="status" value="0" th:checked="${staffEr.status == 0}">
+            <input class="form-check-input" type="radio" name="status" value="false"
+                   th:checked="${staffEr.status == false}">
             <label class="form-check-label">Ngưng hoạt động</label>
         </div>
     </div>
@@ -52,15 +54,11 @@
 <form th:action="@{/export/excel}" method="get">
     <button type="submit" class="btn btn-info">Download Template</button>
 </form>
-<form th:action="@{/import/staff}" method="post" enctype="multipart/form-data">
-    <div class="mb-3">
-        <label class="form-label">Chọn file Excel:</label>
-        <input type="file" name="file" accept=".xlsx" class="form-control" required>
-    </div>
-    <button type="submit" class="btn btn-info">Import</button>
+<form th:action="@{/import}" method="get">
+    <button class="btn btn-info">Import</button>
 </form>
 <table class="table">
-    <h1>danh sach khach hang</h1>
+    <h1>Danh sách nhân viên</h1>
     <thead>
     <tr>
         <th>STT</th>
@@ -68,8 +66,8 @@
         <th>Họ Tên</th>
         <th>Email FPT</th>
         <th>Email FE</th>
-        <th>trang thai</th>
-        <th>thao tac</th>
+        <th>Trạng thái</th>
+        <th>Thao tac</th>
     </tr>
     </thead>
     <tbody>
@@ -79,12 +77,11 @@
         <td th:text="${a.name}"></td>
         <td th:text="${a.accountFPT}"></td>
         <td th:text="${a.accountFE}"></td>
-        <td th:text="${a.status == 1} ? 'Đang hoạt động' : 'Ngưng hoạt động'"></td>
+        <td th:text="${a.status == true} ? 'Đang hoạt động' : 'Ngưng hoạt động'"></td>
         <td>
             <a class="btn btn-warning" th:href="@{/detail/staff(id=${a.id})}">DeTail</a>
-            <a class="btn btn-warning" th:href="@{/staff/doi(id=${a.id})}">Change</a>
+            <a class="btn btn-danger" th:href="@{/staff/doi(id=${a.id})}">Change</a>
         </td>
-
     </tr>
     </tbody>
 </table>
