@@ -45,7 +45,6 @@ public class StaffController {
             return "Home";
         }
 
-        // Validate email addresses
         if (staff.getAccountFPT() != null && !staff.getAccountFPT().endsWith("@fpt.edu.vn")) {
             model.addAttribute("error", "Email FPT phải kết thúc với @fpt.edu.vn");
             model.addAttribute("staffEr", staff);
@@ -57,7 +56,6 @@ public class StaffController {
             return "Home";
         }
 
-        // Validate required fields
         if (staff.getStaffCode().isEmpty() || staff.getName().isEmpty() ||
                 staff.getAccountFPT().isEmpty() || staff.getAccountFE().isEmpty()) {
             model.addAttribute("error", "Không được để trống");
@@ -65,7 +63,6 @@ public class StaffController {
             return "Home";
         }
 
-        // Check for duplicates
         if (staffRepo.existsByAccountFE(staff.getAccountFE()) ||
                 staffRepo.existsByAccountFPT(staff.getAccountFPT()) ||
                 staffRepo.existsByStaffCode(staff.getStaffCode())) {
@@ -74,7 +71,6 @@ public class StaffController {
             return "Home";
         }
 
-        // Save the staff member if all checks pass
         staffRepo.save(staff);
         return "redirect:/home";
     }
