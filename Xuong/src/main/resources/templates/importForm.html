@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Import Nhân Viên</title>
+</head>
+<body>
+<h2>Import Nhân Viên</h2>
+<form th:action="@{/import/staff}" method="post" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label class="form-label">Chọn file Excel:</label>
+    <input type="file" name="file" accept=".xlsx" class="form-control" required>
+  </div>
+  <button type="submit" class="btn btn-info">Import</button>
+</form>
+</body>
+</html>
