@@ -80,7 +80,7 @@
         <td th:text="${a.status == true} ? 'Đang hoạt động' : 'Ngưng hoạt động'"></td>
         <td>
             <a class="btn btn-warning" th:href="@{/detail/staff(id=${a.id})}">DeTail</a>
-            <a class="btn btn-danger" th:href="@{/staff/doi(id=${a.id})}">Change</a>
+            <a class="btn btn-danger" th:href="@{/staff/chage(id=${a.id})}">Change</a>
         </td>
     </tr>
     </tbody>

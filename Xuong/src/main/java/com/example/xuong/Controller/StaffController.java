@@ -76,11 +76,11 @@ public class StaffController {
     }
 
 
-    @GetMapping("/staff/doi")
+    @GetMapping("/staff/chage")
     public String changeStatus(@RequestParam("id") UUID id, Model model) {
         Staff staff = staffRepo.findById(id).orElse(null);
         if (staff != null) {
-            staff.setStatus(staff.isStatus() == true ? true : false);
+            staff.setStatus(staff.isStatus() == true ? false : true);
             staffRepo.save(staff);
             model.addAttribute("message", "Đổi trạng thái thành công");
         } else {
